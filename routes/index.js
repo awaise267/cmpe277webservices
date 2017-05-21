@@ -230,24 +230,36 @@ exports.create_owner = function (req, res) {
 
 
 exports.get_garage_locations = function (req, res) {
-    var query = "select * from Garage";
+    var lat = req.body.lat;
+    var long = req.body.lng;
+    var query = "CALL sorted_garages(?,?);";
     var data = {};
-    executeQuery(query, function (err, rows) {
-        if (!err && rows.length > 0) {
-            data.responseData = {
-                garages: rows
-            };
-        } else {
-            if (err) {
-                console.log(err);
-                data.value = "Failed getting garage locations from database";
-            } else {
-                data.value = "No garages entered into database";
-            }
-        }
-        res.send(data);
-    });
 
+    pool.getConnection(function (err, conn) {
+        if (err) {
+            console.log(err);
+            data.value = "Failed connecting to database";
+            res.send(data);
+        } else {
+            conn.query(query, [lat, long], function (err, rows) {
+                if (!err && rows.length > 0) {
+                    console.log(rows[0]);
+                    data.value = "success";
+                    data.responseData = {
+                        garages: rows[0]
+                    };
+                } else {
+                    if (err) {
+                        console.log(err);
+                        data.value = "Failed getting garage locations from database";
+                    } else {
+                        data.value = "No garages entered into database";
+                    }
+                }
+                res.send(data);
+            });
+        }
+    });
 };
 
 exports.add_garage = function (req, res) {

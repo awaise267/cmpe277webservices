@@ -23,7 +23,7 @@ app.post('/login-user', index.login_user);
 app.post('/login-owner', index.login_owner);
 app.post('/create-user', index.create_user);
 app.post('/create-owner', index.create_owner);
-app.get('/garage', index.get_garage_locations);
+app.post('/garage', index.get_garage_locations);
 app.post('/add-garage', index.add_garage);
 app.post('/generate-pin', index.generate_pin);
 app.post('/pin-entered', index.pin_entered);
