@@ -255,6 +255,7 @@ exports.get_garage_locations = function (req, res) {
                         data.value = "No garages entered into database";
                     }
                 }
+                conn.release();
                 res.send(data);
             });
         }
