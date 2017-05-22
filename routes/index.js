@@ -545,7 +545,7 @@ exports.poll_update = function (req, res) {
 
 exports.get_user_history = function (req, res) {
     var userId = req.body.id;
-    var query = "select * from ParkHistory where userId = ?";
+    var query = "select p.userId as userId, p.garageId as garageId, p.startTime as startTime, p.endTime as endTime, p.charges as charges, g.lat as lat, g.long as `long`, g.name as name from ParkHistory p JOIN Garage g ON p.garageId = g.id where userId = ?";
 
     var data = {};
     pool.getConnection(function (err, conn) {
