@@ -30,6 +30,7 @@ app.post('/pin-entered', index.pin_entered);
 app.post('/exit-garage', index.exit_garage);
 app.post('/poll-update', index.poll_update);
 app.post('/user-history', index.get_user_history);
+app.post('/owner-garage', index.owner_garages);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

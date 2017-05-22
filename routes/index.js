@@ -243,7 +243,6 @@ exports.get_garage_locations = function (req, res) {
         } else {
             conn.query(query, [lat, long], function (err, rows) {
                 if (!err && rows.length > 0) {
-                    console.log(rows[0]);
                     data.value = "success";
                     data.responseData = {
                         garages: rows[0]
@@ -576,6 +575,42 @@ exports.get_user_history = function (req, res) {
         }
     });
 };
+
+exports.owner_garages = function(req, res){
+    var ownerId = req.body.id;
+
+    var query = "select * from Garage where ownerId = ?";
+
+    var data = {};
+    pool.getConnection(function (err, conn) {
+        if (err) {
+            console.log(err);
+            data.value = "Failed connecting to database";
+            res.send(data);
+        } else {
+            conn.query(query, [ownerId], function (err, rows) {
+                if (err) {
+                    console.log(err);
+                    data.value = "Failed running query on database";
+                    conn.release();
+                    res.send(data);
+                } else {
+                    if (rows.length > 0) {
+                        data.value = "success";
+                        data.responseData = {
+                            garages: rows[0]
+                        };
+                    } else {
+                        data.value = "No garages present in database for the user";
+                    }
+                    conn.release();
+                    res.send(data);
+                }
+            });
+        }
+    });
+};
+
 
 
 
