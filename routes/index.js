@@ -508,7 +508,7 @@ exports.exit_garage = function (req, res) {
 };
 
 exports.poll_update = function (req, res) {
-    var userId = req.body.userId;
+    var userId = req.body.id;
     var query = "select * from GaragePins where driverId = ?";
     var data = {};
 
@@ -544,7 +544,7 @@ exports.poll_update = function (req, res) {
 };
 
 exports.get_user_history = function (req, res) {
-    var userId = req.body.userId;
+    var userId = req.body.id;
     var query = "select * from ParkHistory where userId = ?";
 
     var data = {};
