@@ -600,7 +600,7 @@ exports.owner_garages = function(req, res){
                         console.log(rows);
                         data.value = "success";
                         data.responseData = {
-                            garages: rows[0]
+                            garages: rows
                         };
                     } else {
                         data.value = "No garages present in database for the user";
