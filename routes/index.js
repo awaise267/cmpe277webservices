@@ -580,7 +580,7 @@ exports.get_user_history = function (req, res) {
 exports.owner_garages = function(req, res){
     var ownerId = req.body.id;
 
-    var query = "select * from Garage where ownerId = ?";
+    var query = "select g.id as id, g.name as name, g.lat as lat, g.long as `long`, g.spots as spots, g.availableSpots as availableSpots, g.rate as rate, g.ownerId as ownerId, sum(h.charges) as earnings from Garage g INNER JOIN giParkHistory h on g.id = h.garageId where g.ownerId = ?";
 
     var data = {};
     pool.getConnection(function (err, conn) {
